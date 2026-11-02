@@ -1,0 +1,15 @@
+@if (showNavigation()) {
+	<header class="app-header">
+		<a class="brand" routerLink="/dashboard" aria-label="Employee Management dashboard">
+			<span class="brand-mark">E</span>
+			<span>Employee<span class="brand-light">Ops</span></span>
+		</a>
+		<nav aria-label="Main navigation">
+			<a routerLink="/dashboard" routerLinkActive="active" ariaCurrentWhenActive="page">Dashboard</a>
+			<a routerLink="/employees" routerLinkActive="active" ariaCurrentWhenActive="page">Employees</a>
+			<a routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
+		</nav>
+		<a class="logout-link" routerLink="/login">Log out</a>
+	</header>
+}
+<router-outlet />

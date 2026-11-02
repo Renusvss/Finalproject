@@ -1,0 +1,72 @@
+<main class="form-page">
+  <header class="page-heading">
+    <div>
+      <p class="eyebrow">Work tracking</p>
+      <h1>Add task</h1>
+      <p>Set an owner, urgency, and due date for the work.</p>
+    </div>
+    <a class="text-link" routerLink="/tasks">Back to tasks</a>
+  </header>
+
+  @if (employeeError()) {
+    <div class="request-message error-message" role="alert">
+      <span>{{ employeeError() }}</span>
+      <button class="text-button" type="button" (click)="retryEmployees()">Retry</button>
+    </div>
+  }
+
+  <form class="form-panel" [formGroup]="taskForm" (ngSubmit)="submit()" novalidate>
+    <div class="form-grid">
+      <div class="field field-wide">
+        <label for="title">Task title</label>
+        <input id="title" formControlName="title" maxlength="120" [attr.aria-invalid]="isInvalid('title')" aria-describedby="title-error" />
+        @if (isInvalid('title')) { <p id="title-error" class="field-error">@if (taskForm.controls.title.hasError('required')) { A title is required. } @else if (taskForm.controls.title.hasError('minlength')) { Enter at least 3 characters. } @else { Use no more than 120 characters. }</p> }
+      </div>
+      <div class="field field-wide">
+        <label for="description">Description</label>
+        <textarea id="description" rows="5" formControlName="description" maxlength="2000" [attr.aria-invalid]="isInvalid('description')" aria-describedby="description-error"></textarea>
+        @if (isInvalid('description')) { <p id="description-error" class="field-error">Description is required and must be no longer than 2000 characters.</p> }
+      </div>
+      <div class="field">
+        <label for="assignedEmployeeId">Assigned employee</label>
+        <select id="assignedEmployeeId" formControlName="assignedEmployeeId" [attr.aria-invalid]="isInvalid('assignedEmployeeId')" aria-describedby="employee-error">
+          <option value="">{{ employeeLoading() ? 'Loading employees...' : 'Choose an employee' }}</option>
+          @for (employee of employees(); track employee.id) {
+            <option [value]="employee.id">{{ employee.name }} - {{ employee.department }}</option>
+          }
+        </select>
+        @if (isInvalid('assignedEmployeeId')) { <p id="employee-error" class="field-error">Choose an assigned employee.</p> }
+      </div>
+      <div class="field">
+        <label for="dueDate">Due date</label>
+        <input id="dueDate" type="date" formControlName="dueDate" [attr.aria-invalid]="isInvalid('dueDate')" aria-describedby="dueDate-error" />
+        @if (isInvalid('dueDate')) { <p id="dueDate-error" class="field-error">A due date is required.</p> }
+      </div>
+      <div class="field">
+        <label for="priority">Priority</label>
+        <select id="priority" formControlName="priority">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="status">Status</label>
+        <select id="status" formControlName="status">
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+    </div>
+
+    @if (errorMessage()) { <p class="request-message error-message" role="alert">{{ errorMessage() }}</p> }
+
+    <div class="form-actions">
+      <button class="button button-secondary" type="button" (click)="resetForm()">Reset</button>
+      <button class="button button-primary" type="submit" [disabled]="taskForm.invalid || submitting() || employeeLoading() || employees().length === 0">
+        {{ submitting() ? 'Saving...' : 'Add task' }}
+      </button>
+    </div>
+  </form>
+</main>

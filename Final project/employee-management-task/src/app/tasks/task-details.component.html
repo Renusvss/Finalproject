@@ -1,0 +1,37 @@
+<main class="details-page">
+  <a class="back-link" routerLink="/tasks">← All tasks</a>
+
+  @if (loading()) {
+    <p class="state-panel" role="status">Loading task details...</p>
+  } @else if (errorMessage()) {
+    <section class="state-panel error-state" role="alert">
+      <h1>Task unavailable</h1>
+      <p>{{ errorMessage() }}</p>
+      <a routerLink="/tasks">Return to tasks</a>
+    </section>
+  } @else if (task(); as currentTask) {
+    <section class="detail-panel">
+      <div class="detail-heading">
+        <div>
+          <p class="eyebrow">Task details · #{{ currentTask.id }}</p>
+          <h1>{{ currentTask.title }}</h1>
+        </div>
+        <div class="badges">
+          <span class="priority-pill" [class]="'priority-pill priority-' + currentTask.priority.toLowerCase()">{{ currentTask.priority }} priority</span>
+          <span class="status-pill" [class]="'status-pill status-' + currentTask.status.toLowerCase().replace(' ', '-')">{{ currentTask.status }}</span>
+        </div>
+      </div>
+      <div class="description-block">
+        <h2>Description</h2>
+        <p>{{ currentTask.description }}</p>
+      </div>
+      <dl>
+        <div><dt>Assigned employee</dt><dd>{{ assignedEmployee()?.name ?? 'Employee #' + currentTask.assignedEmployeeId }}</dd></div>
+        <div><dt>Department</dt><dd>{{ assignedEmployee()?.department ?? 'Not available' }}</dd></div>
+        <div><dt>Due date</dt><dd>{{ currentTask.dueDate | date:'longDate':'UTC' }}</dd></div>
+        <div><dt>Task ID</dt><dd>#{{ currentTask.id }}</dd></div>
+      </dl>
+      @if (employeeError()) { <p class="lookup-warning" role="status">Employee details could not be loaded. The assignee ID is shown instead.</p> }
+    </section>
+  }
+</main>

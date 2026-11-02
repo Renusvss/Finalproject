@@ -1,0 +1,83 @@
+<main class="dashboard-page">
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Employee Management</p>
+      <h1>Dashboard</h1>
+    </div>
+    <a routerLink="/tasks">View task board</a>
+  </header>
+
+  @if (dashboard.loading()) {
+    <p class="panel" role="status">Loading dashboard data...</p>
+  } @else if (dashboard.errorMessage()) {
+    <section class="panel error-panel" role="alert">
+      <p>{{ dashboard.errorMessage() }}</p>
+      <button type="button" (click)="dashboard.load()">Try again</button>
+    </section>
+  } @else {
+    <section aria-labelledby="statistics-heading">
+      <h2 id="statistics-heading">Overview</h2>
+      <div class="statistics-grid">
+        @for (statistic of dashboard.overview().statistics; track statistic.label) {
+          <article class="statistic-card">
+            <p>{{ statistic.label }}</p>
+            <strong>{{ statistic.value }}</strong>
+          </article>
+        }
+      </div>
+    </section>
+
+    <div class="content-grid">
+      <section class="panel" aria-labelledby="recent-employees-heading">
+        <div class="section-heading">
+          <div>
+            <h2 id="recent-employees-heading">Recent Employees</h2>
+            <p>Employees ordered by joining date.</p>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Employee</th>
+                <th scope="col">Department</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (employee of dashboard.overview().recentEmployees; track employee.id) {
+                <tr>
+                  <td>
+                    <strong>{{ employee.name }}</strong>
+                    <span>{{ employee.role }}</span>
+                  </td>
+                  <td>{{ employee.department }}</td>
+                  <td>
+                    <span class="status" [class.inactive]="employee.status === 'Inactive'">
+                      {{ employee.status }}
+                    </span>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="task-summary-heading">
+        <h2 id="task-summary-heading">Task Summary</h2>
+        <p class="panel-description">Tasks grouped by their current status.</p>
+
+        <div class="task-list">
+          @for (summary of dashboard.overview().taskSummary; track summary.status) {
+            <div class="task-row">
+              <span>{{ summary.status }}</span>
+              <strong>{{ summary.count }}</strong>
+            </div>
+          }
+        </div>
+      </section>
+    </div>
+  }
+</main>

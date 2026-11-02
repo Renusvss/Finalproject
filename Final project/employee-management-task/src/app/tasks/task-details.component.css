@@ -1,0 +1,27 @@
+:host { display: block; }
+.details-page { max-width: 860px; margin: 0 auto; padding: 38px 24px 64px; }
+.back-link { color: #176d65; font-size: 14px; font-weight: 800; text-decoration: none; }
+.back-link:hover { text-decoration: underline; }
+.detail-panel, .state-panel { margin-top: 22px; padding: 30px; border: 1px solid #dce5e2; border-radius: 8px; background: #fff; }
+.detail-heading { display: flex; justify-content: space-between; gap: 20px; padding-bottom: 24px; border-bottom: 1px solid #e6ecea; }
+.eyebrow { margin: 0 0 9px; color: #187b72; font-size: 12px; font-weight: 800; text-transform: uppercase; }
+h1 { margin: 0; color: #172a32; font-size: 30px; }
+.badges { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 8px; }
+.priority-pill, .status-pill { display: inline-flex; min-height: 27px; align-items: center; padding: 0 9px; border-radius: 4px; font-size: 12px; font-weight: 800; white-space: nowrap; }
+.priority-low { color: #48665e; background: #e9f1ed; }
+.priority-medium { color: #8b5a16; background: #fff0d6; }
+.priority-high { color: #a63e36; background: #fde9e5; }
+.status-pending { color: #755718; background: #fff2d6; }
+.status-in-progress { color: #195e77; background: #e1f1f5; }
+.status-completed { color: #236449; background: #e3f2e9; }
+.description-block { padding: 24px 0; }
+.description-block h2 { margin: 0 0 8px; color: #42575d; font-size: 13px; text-transform: uppercase; }
+.description-block p { margin: 0; color: #32484f; line-height: 1.65; white-space: pre-wrap; }
+dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin: 0; padding-top: 20px; border-top: 1px solid #e6ecea; }
+dt { color: #6a7a7f; font-size: 12px; font-weight: 800; text-transform: uppercase; }
+dd { margin: 6px 0 0; color: #20363d; font-weight: 700; }
+.error-state { color: #a43832; }
+.error-state h1 { font-size: 22px; }
+.error-state a { color: #176d65; }
+.lookup-warning { margin: 20px 0 0; color: #805711; font-size: 13px; }
+@media (max-width: 620px) { .details-page { padding: 28px 16px 48px; } .detail-panel, .state-panel { padding: 22px 18px; } .detail-heading { flex-direction: column; } h1 { font-size: 25px; } dl { grid-template-columns: 1fr; } }

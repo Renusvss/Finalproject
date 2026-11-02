@@ -1,0 +1,80 @@
+<main class="task-page">
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">Work tracking</p>
+      <h1>Tasks</h1>
+      <p class="intro">Track ownership, priority, and delivery dates across the team.</p>
+    </div>
+    <a class="add-button" routerLink="/tasks/add">Add task <span aria-hidden="true">+</span></a>
+  </header>
+
+  @if (createdMessage()) { <p class="success-message" role="status">{{ createdMessage() }}</p> }
+  @if (employeeError()) {
+    <p class="lookup-warning" role="status">Assignee names could not be loaded. <button class="inline-button" type="button" (click)="loadEmployees()">Retry</button></p>
+  }
+
+  <section class="filters" aria-label="Task filters">
+    <label class="search-filter">Search tasks
+      <input type="search" placeholder="Search by title" [value]="searchText()" (input)="updateSearch($event)" />
+    </label>
+    <label>Status
+      <select [value]="selectedStatus()" (change)="updateStatus($event)">
+        <option value="All">All statuses</option>
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+      </select>
+    </label>
+    <label>Priority
+      <select [value]="selectedPriority()" (change)="updatePriority($event)">
+        <option value="All">All priorities</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+    </label>
+  </section>
+
+  @if (loading()) {
+    <p class="state-panel" role="status">Loading tasks...</p>
+  } @else if (errorMessage()) {
+    <section class="state-panel error-state" role="alert">
+      <p>{{ errorMessage() }}</p>
+      <button class="button button-secondary" type="button" (click)="loadTasks()">Try again</button>
+    </section>
+  } @else if (tasks().length === 0) {
+    <section class="empty-state">
+      <p class="empty-kicker">Nothing on the board yet</p>
+      <h2>No tasks available</h2>
+      <p>Create a task to give the team a clear next step.</p>
+      <a class="add-button" routerLink="/tasks/add">Create first task</a>
+    </section>
+  } @else if (filteredTasks().length === 0) {
+    <section class="empty-state">
+      <h2>No matching tasks</h2>
+      <p>Try changing the search or filters.</p>
+      <button class="button button-secondary" type="button" (click)="clearFilters()">Clear filters</button>
+    </section>
+  } @else {
+    <div class="list-meta"><span>{{ filteredTasks().length }} of {{ tasks().length }} tasks</span><span>Sorted by due date</span></div>
+    <div class="task-table-wrap">
+      <table class="task-table">
+        <thead><tr><th scope="col">Task</th><th scope="col">Assigned to</th><th scope="col">Priority</th><th scope="col">Status</th><th scope="col">Due date</th></tr></thead>
+        <tbody>
+          @for (task of filteredTasks(); track task.id) {
+            <tr>
+              <td class="task-title-cell" data-label="Task">
+                <a [routerLink]="['/tasks', task.id]">{{ task.title }}</a>
+                <span>{{ task.description }}</span>
+              </td>
+              <td data-label="Assigned to">{{ employeeName(task.assignedEmployeeId) }}</td>
+              <td data-label="Priority"><span class="priority-pill" [class]="'priority-pill priority-' + task.priority.toLowerCase()">{{ task.priority }}</span></td>
+              <td data-label="Status"><span class="status-pill" [class]="'status-pill status-' + task.status.toLowerCase().replace(' ', '-')">{{ task.status }}</span></td>
+              <td data-label="Due date">{{ task.dueDate | date:'mediumDate':'UTC' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</main>

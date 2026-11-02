@@ -1,0 +1,8 @@
+[
+  { "id": 1, "name": "Aisha Patel", "email": "aisha.patel@company.com", "phone": "+1 415 555 0101", "department": "Engineering", "role": "Frontend Developer", "status": "Active", "joiningDate": "2023-02-15" },
+  { "id": 2, "name": "Liam Chen", "email": "liam.chen@company.com", "phone": "+1 415 555 0102", "department": "Human Resources", "role": "HR Specialist", "status": "Active", "joiningDate": "2022-09-08" },
+  { "id": 3, "name": "Sofia Martinez", "email": "sofia.martinez@company.com", "phone": "+1 415 555 0103", "department": "Design", "role": "Product Designer", "status": "Active", "joiningDate": "2024-01-22" },
+  { "id": 4, "name": "Noah Williams", "email": "noah.williams@company.com", "phone": "+1 415 555 0104", "department": "Operations", "role": "Project Manager", "status": "Active", "joiningDate": "2021-06-11" },
+  { "id": 5, "name": "Mia Johnson", "email": "mia.johnson@company.com", "phone": "+1 415 555 0105", "department": "Engineering", "role": "QA Engineer", "status": "Inactive", "joiningDate": "2023-07-03" },
+  { "id": 6, "name": "Ethan Brown", "email": "ethan.brown@company.com", "phone": "+1 415 555 0106", "department": "Engineering", "role": "Backend Developer", "status": "Active", "joiningDate": "2022-11-19" }
+]

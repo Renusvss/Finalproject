@@ -1,0 +1,22 @@
+<main class="details-page">
+  <a routerLink="/employees">Back to Employees</a>
+
+  @if (loading) {
+    <p class="state-message" role="status">Loading employee details...</p>
+  } @else if (errorMessage) {
+    <p class="state-message error-state" role="alert">{{ errorMessage }}</p>
+  } @else if (employee) {
+    <section class="details-panel" aria-labelledby="employee-name">
+      <p class="eyebrow">Employee Details</p>
+      <h1 id="employee-name">{{ employee.name }}</h1>
+      <dl>
+        <div><dt>Email</dt><dd>{{ employee.email }}</dd></div>
+        <div><dt>Phone</dt><dd>{{ employee.phone }}</dd></div>
+        <div><dt>Department</dt><dd>{{ employee.department }}</dd></div>
+        <div><dt>Role</dt><dd>{{ employee.role }}</dd></div>
+        <div><dt>Status</dt><dd>{{ employee.status }}</dd></div>
+        <div><dt>Joining Date</dt><dd>{{ employee.joiningDate }}</dd></div>
+      </dl>
+    </section>
+  }
+</main>
